@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tigre Studio — Direct booking websites for Baja</title>
+<meta name="description" content="A small design studio in Todos Santos building direct booking websites for vacation rentals and boutique hotels in Baja California Sur.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bone:   #E4E2DA;   /* bone */
+    --paper:  #F5F4F0;   /* paper */
+    --ink:    #1F2625;   /* ink slate */
+    --ink-2:  #2F3837;   /* ink medio */
+    --muted:  #7A8A86;   /* sage */
+    --amber:  #C26B4F;   /* clay (primary accent) */
+    --amber-2:#D88F75;   /* clay light */
+    --line:   rgba(31,38,37,0.12);
+    --line-2: rgba(31,38,37,0.06);
+  }
+
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+    font-weight: 400;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  .display, h1, h2, h3 {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1;
+  }
+  .italic { font-style: normal; font-weight: 300; letter-spacing: -0.04em; color: var(--muted); }
+
+  /* ─────────────── NAV ─────────────── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 40px;
+    background: rgba(245,244,240,0.85);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 0.5px solid var(--line);
+    z-index: 100;
+    font-size: 13px;
+  }
+  .wordmark { font-family: 'Inter', -apple-system, sans-serif; font-size: 22px; font-weight: 500; letter-spacing: -0.04em; }
+  .wordmark .dot { color: var(--amber); }
+  .nav-links { display: flex; gap: 36px; }
+  .nav-links a { color: var(--muted); text-decoration: none; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    background: var(--ink); color: var(--paper);
+    padding: 9px 18px; border-radius: 100px;
+    text-decoration: none; font-size: 12px; font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  /* ─────────────── HERO ─────────────── */
+  .hero {
+    min-height: 100vh; padding: 140px 40px 80px;
+    display: grid; grid-template-columns: 1fr;
+    align-items: end; position: relative;
+    background: var(--paper);
+  }
+  .hero-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 80px; align-items: end; }
+  .hero-eyebrow {
+    font-size: 11px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--muted);
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 60px;
+  }
+  .hero-eyebrow::before {
+    content: ""; width: 28px; height: 1px;
+    background: var(--amber);
+  }
+  .hero h1 {
+    font-size: clamp(44px, 6.6vw, 108px);
+    line-height: 0.92;
+    margin-bottom: 0;
+    letter-spacing: -0.045em;
+  }
+  .hero h1 .light { font-weight: 300; color: var(--muted); letter-spacing: -0.045em; }
+  .hero h1 .italic-amber { font-style: normal; font-weight: 300; color: var(--amber); letter-spacing: -0.045em; }
+  .hero h1 .dot-amber { color: var(--amber); font-style: normal; }
+
+  .hero-right {
+    padding-bottom: 18px;
+    max-width: 380px;
+  }
+  .hero-right p {
+    font-size: 17px; line-height: 1.55;
+    color: var(--ink-2); margin-bottom: 32px;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--ink); color: var(--paper);
+    padding: 16px 28px; border-radius: 100px;
+    text-decoration: none; font-size: 14px; font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  .btn-primary:hover { background: var(--amber); transform: translateY(-1px); }
+  .btn-primary .arrow {
+    transition: transform 0.3s; display: inline-block;
+  }
+  .btn-primary:hover .arrow { transform: translateX(4px); }
+
+  .hero-meta {
+    display: flex; justify-content: space-between;
+    margin-top: 100px; padding-top: 28px;
+    border-top: 0.5px solid var(--line);
+    font-size: 12px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.15em;
+  }
+
+  /* ─────────────── HERO IMAGE STRIP ─────────────── */
+  .hero-strip {
+    position: relative; height: 60vh; min-height: 480px;
+    overflow: hidden; background: var(--ink);
+  }
+  .hero-strip img {
+    width: 100%; height: 100%; object-fit: cover;
+    transform: scale(1.05);
+    transition: transform 8s ease;
+    background: #2E2A23;
+  }
+  .pillar-image img, .about-image img {
+    background: linear-gradient(135deg, #C77B30 0%, #1A1814 100%);
+  }
+  .hero-strip.in-view img { transform: scale(1); }
+  .hero-strip-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(31,38,37,0.4) 0%, transparent 60%);
+  }
+  .hero-strip-caption {
+    position: absolute; bottom: 40px; left: 40px;
+    color: var(--paper); font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 400;
+  }
+
+  /* ─────────────── DARK SECTION — THE MATH ─────────────── */
+  .dark-section {
+    background: var(--ink); color: var(--paper);
+    padding: 160px 40px;
+    position: relative; overflow: hidden;
+  }
+  .dark-section::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 20%, rgba(194,107,79,0.10) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .section-eyebrow {
+    font-size: 11px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--amber);
+    display: inline-flex; align-items: center; gap: 14px;
+    margin-bottom: 60px;
+  }
+  .section-eyebrow::before {
+    content: "—"; color: var(--amber); font-weight: 600;
+  }
+  .dark-section h2 {
+    font-size: clamp(48px, 6.5vw, 96px); line-height: 0.95;
+    max-width: 1100px; margin-bottom: 24px;
+    color: var(--paper);
+  }
+  .dark-section h2 .amber { color: var(--amber-2); font-style: normal; font-weight: 300; letter-spacing: -0.04em; }
+  .dark-section .lead {
+    font-size: 20px; max-width: 580px;
+    color: rgba(245,244,240,0.7); line-height: 1.5;
+    margin-bottom: 100px;
+  }
+
+  .math-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 60px; padding-top: 60px;
+    border-top: 0.5px solid rgba(245,244,240,0.15);
+  }
+  .math-stat .figure {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(72px, 9vw, 140px);
+    line-height: 0.9; color: var(--amber-2);
+    font-weight: 300; font-style: normal;
+    letter-spacing: -0.05em; margin-bottom: 24px;
+  }
+  .math-stat .figure .small {
+    font-size: 0.5em; vertical-align: super;
+    font-style: normal; margin-right: 4px;
+  }
+  .math-stat .desc {
+    font-size: 15px; color: rgba(245,244,240,0.6);
+    line-height: 1.55; max-width: 240px;
+  }
+  .math-stat .label {
+    font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--amber-2);
+    margin-bottom: 16px; display: block;
+  }
+
+  /* ─────────────── PILLARS SECTION ─────────────── */
+  .pillars-section { padding: 160px 0 0; background: var(--bone); position: relative; }
+  .pillars-header { padding: 0 40px 100px; max-width: 1100px; }
+  .pillars-section .section-eyebrow::before { content: "—"; color: var(--amber); }
+  .pillars-section h2 {
+    font-size: clamp(48px, 6vw, 96px); line-height: 0.95;
+    max-width: 900px;
+  }
+  .pillars-section h2 .italic { color: var(--amber); }
+
+  .pillar-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border-top: 0.5px solid var(--line);
+    align-items: stretch;
+  }
+  .pillar-row:last-child { border-bottom: 0.5px solid var(--line); }
+  .pillar-text {
+    padding: 80px 60px; display: flex; flex-direction: column;
+    justify-content: center;
+    border-right: 0.5px solid var(--line);
+  }
+  .pillar-num {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 13px; color: var(--amber); font-weight: 500;
+    margin-bottom: 32px; letter-spacing: 0.05em;
+  }
+  .pillar-text h3 {
+    font-size: clamp(28px, 3.5vw, 48px);
+    line-height: 1.05; margin-bottom: 20px;
+  }
+  .pillar-text h3 .italic { color: var(--amber); }
+  .pillar-text p {
+    font-size: 16px; color: var(--ink-2);
+    line-height: 1.6; max-width: 420px;
+  }
+  .pillar-image {
+    position: relative; overflow: hidden; min-height: 380px;
+    background: var(--ink);
+  }
+  .pillar-image img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 1.2s ease;
+  }
+  .pillar-row:hover .pillar-image img { transform: scale(1.04); }
+  .pillar-image.left .pillar-num-overlay {
+    position: absolute; top: 40px; left: 40px;
+    font-family: 'Inter', -apple-system, sans-serif; font-style: italic;
+    color: var(--paper); font-size: 14px;
+    letter-spacing: 0.05em; opacity: 0.7;
+  }
+
+  /* Alternating layout */
+  .pillar-row.reverse .pillar-text { order: 2; border-right: none; border-left: 0.5px solid var(--line); }
+  .pillar-row.reverse .pillar-image { order: 1; }
+
+  /* ─────────────── PACKAGES ─────────────── */
+  .packages-section { padding: 160px 40px; background: var(--paper); }
+  .packages-header { text-align: center; max-width: 760px; margin: 0 auto 100px; }
+  .packages-header .section-eyebrow { justify-content: center; }
+  .packages-header h2 {
+    font-size: clamp(48px, 7vw, 112px);
+    line-height: 0.92; margin-bottom: 24px;
+  }
+  .packages-header h2 .italic { color: var(--amber); }
+  .packages-header .lead {
+    font-size: 18px; color: var(--muted); max-width: 480px;
+    margin: 0 auto; line-height: 1.55;
+  }
+  .packages-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; max-width: 1240px; margin: 0 auto;
+  }
+  .pkg {
+    background: var(--bone);
+    border-radius: 28px; padding: 48px 36px;
+    display: flex; flex-direction: column;
+    transition: transform 0.4s ease, background 0.4s ease;
+  }
+  .pkg:hover { transform: translateY(-6px); }
+  .pkg.featured {
+    background: var(--ink); color: var(--paper);
+    position: relative;
+  }
+  .pkg-badge {
+    background: var(--amber); color: var(--ink);
+    font-size: 10px; padding: 6px 14px;
+    border-radius: 100px; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    align-self: flex-start; margin-bottom: 28px;
+  }
+  .pkg h3 {
+    font-family: 'Inter', -apple-system, sans-serif; font-size: 40px;
+    font-weight: 400; line-height: 1; margin-bottom: 8px;
+  }
+  .pkg-tag {
+    font-size: 14px; color: var(--muted); margin-bottom: 36px;
+    line-height: 1.4;
+  }
+  .pkg.featured .pkg-tag { color: rgba(245,244,240,0.5); }
+  .pkg-price {
+    font-family: 'Inter', -apple-system, sans-serif; font-size: 72px;
+    line-height: 0.9; font-weight: 300;
+    letter-spacing: -0.04em; margin-bottom: 8px;
+  }
+  .pkg.featured .pkg-price { color: var(--amber-2); }
+  .pkg-price-mxn {
+    font-size: 12px; color: var(--muted);
+    letter-spacing: 0.08em; margin-bottom: 40px;
+    text-transform: uppercase;
+  }
+  .pkg.featured .pkg-price-mxn { color: rgba(245,244,240,0.4); }
+  .pkg ul { list-style: none; margin-bottom: 40px; flex: 1; }
+  .pkg li {
+    font-size: 14px; padding: 12px 0;
+    color: var(--ink-2); line-height: 1.5;
+    border-bottom: 0.5px solid var(--line);
+    display: flex; gap: 12px;
+  }
+  .pkg.featured li {
+    color: rgba(245,244,240,0.75);
+    border-bottom: 0.5px solid rgba(245,244,240,0.1);
+  }
+  .pkg li::before {
+    content: "→"; color: var(--amber);
+    font-family: 'Inter', -apple-system, sans-serif;
+  }
+  .pkg-btn {
+    background: transparent; border: 0.5px solid var(--ink);
+    color: var(--ink); padding: 16px;
+    border-radius: 100px; font-size: 13px; font-weight: 500;
+    font-family: inherit; cursor: pointer;
+    transition: all 0.3s;
+  }
+  .pkg-btn:hover { background: var(--ink); color: var(--paper); }
+  .pkg.featured .pkg-btn {
+    background: var(--amber); color: var(--ink); border: none;
+  }
+  .pkg.featured .pkg-btn:hover { background: var(--amber-2); }
+
+  /* ─────────────── PROCESS ─────────────── */
+  .process-section {
+    padding: 160px 40px; background: var(--bone);
+    position: relative;
+  }
+  .process-header {
+    max-width: 1100px; margin: 0 auto 100px;
+  }
+  .process-header h2 {
+    font-size: clamp(48px, 7vw, 96px); line-height: 0.95;
+    max-width: 760px;
+  }
+  .process-header h2 .italic { color: var(--amber); }
+  .process-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 40px; max-width: 1100px; margin: 0 auto;
+  }
+  .process-step {
+    padding-top: 32px;
+    border-top: 0.5px solid var(--line);
+  }
+  .step-num {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 80px; line-height: 1; color: var(--amber);
+    font-weight: 300; margin-bottom: 32px;
+    letter-spacing: -0.04em;
+  }
+  .process-step h3 {
+    font-size: 26px; line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .process-step p {
+    font-size: 15px; line-height: 1.6;
+    color: var(--ink-2);
+  }
+  .process-time {
+    font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--muted);
+    margin-top: 24px;
+  }
+
+  /* ─────────────── ABOUT ─────────────── */
+  .about-section {
+    padding: 160px 40px; background: var(--paper);
+    position: relative;
+  }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 100px; max-width: 1200px; margin: 0 auto;
+    align-items: center;
+  }
+  .about-image { position: relative; }
+  .about-image img {
+    width: 100%; aspect-ratio: 4/5; object-fit: cover;
+    border-radius: 8px;
+  }
+  .about-image-caption {
+    position: absolute; bottom: 24px; left: 24px;
+    background: var(--paper); padding: 12px 18px;
+    border-radius: 100px; font-size: 12px;
+    color: var(--muted); letter-spacing: 0.08em;
+    font-family: 'Inter', -apple-system, sans-serif; font-weight: 500;
+  }
+  .about-quote {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(32px, 3.5vw, 52px);
+    line-height: 1.1; margin-bottom: 40px;
+    font-weight: 300; letter-spacing: -0.02em;
+  }
+  .about-quote .amber-accent { color: var(--amber); font-weight: 400; }
+  .about-sig {
+    padding-top: 28px; border-top: 0.5px solid var(--line);
+    font-size: 14px; color: var(--muted);
+    line-height: 1.6;
+  }
+  .about-sig strong {
+    color: var(--ink); font-weight: 500;
+    display: block; margin-bottom: 4px;
+    font-size: 16px;
+  }
+  .about-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 40px; margin-top: 60px;
+    padding-top: 40px;
+    border-top: 0.5px solid var(--line);
+  }
+  .about-stat .num {
+    font-family: 'Inter', -apple-system, sans-serif; font-size: 56px;
+    line-height: 0.9; color: var(--ink);
+    font-weight: 300; letter-spacing: -0.03em;
+    margin-bottom: 12px;
+  }
+  .about-stat .lbl {
+    font-size: 12px; color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ─────────────── CONTACT/CTA ─────────────── */
+  .cta-section {
+    background: var(--ink); color: var(--paper);
+    padding: 160px 40px; position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(194,107,79,0.14) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cta-grid {
+    display: grid; grid-template-columns: 1.2fr 1fr;
+    gap: 100px; max-width: 1200px; margin: 0 auto;
+    align-items: start; position: relative;
+  }
+  .cta-section .section-eyebrow { color: var(--amber-2); }
+  .cta-section .section-eyebrow::before { color: var(--amber-2); }
+  .cta-section h2 {
+    font-size: clamp(56px, 7vw, 120px); line-height: 0.92;
+    color: var(--paper); margin-bottom: 32px;
+    letter-spacing: -0.04em;
+  }
+  .cta-section h2 .italic { color: var(--amber-2); }
+  .cta-section .lead {
+    font-size: 18px; color: rgba(245,244,240,0.7);
+    line-height: 1.55; max-width: 420px; margin-bottom: 48px;
+  }
+  .cta-section .lead a { color: var(--amber-2); text-decoration: underline; text-underline-offset: 4px; }
+  .form-wrapper {
+    background: rgba(245,244,240,0.04);
+    border: 0.5px solid rgba(245,244,240,0.12);
+    border-radius: 20px; padding: 40px;
+    backdrop-filter: blur(8px);
+  }
+  .form-label {
+    display: block; font-size: 11px;
+    color: rgba(245,244,240,0.5); margin-bottom: 8px;
+    text-transform: uppercase; letter-spacing: 0.15em;
+  }
+  .form-field { margin-bottom: 24px; }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; padding: 14px 0;
+    background: transparent; border: none;
+    border-bottom: 0.5px solid rgba(245,244,240,0.2);
+    color: var(--paper); font-family: inherit;
+    font-size: 15px; outline: none;
+    transition: border-color 0.3s;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-bottom-color: var(--amber);
+  }
+  .form-textarea { resize: vertical; min-height: 80px; padding-top: 14px; }
+  .form-select { -webkit-appearance: none; appearance: none; color: rgba(245,244,240,0.7); }
+  .form-select option { background: var(--ink); color: var(--paper); }
+  .form-submit {
+    width: 100%; padding: 18px;
+    background: var(--amber); color: var(--ink);
+    border: none; border-radius: 100px;
+    font-family: inherit; font-size: 14px; font-weight: 500;
+    cursor: pointer; margin-top: 12px;
+    transition: background 0.3s;
+  }
+  .form-submit:hover { background: var(--amber-2); }
+  ::placeholder { color: rgba(245,244,240,0.3); }
+
+  /* ─────────────── FOOTER ─────────────── */
+  .footer {
+    background: var(--ink); color: rgba(245,244,240,0.5);
+    padding: 40px 40px 32px;
+    border-top: 0.5px solid rgba(245,244,240,0.1);
+    display: flex; justify-content: space-between;
+    align-items: end; font-size: 12px;
+  }
+  .footer-l { display: flex; flex-direction: column; gap: 6px; }
+  .footer .wordmark-foot {
+    font-family: 'Inter', -apple-system, sans-serif; font-size: 28px;
+    color: var(--paper); margin-bottom: 12px;
+    letter-spacing: -0.04em; font-weight: 400;
+  }
+  .footer .wordmark-foot .dot { color: var(--amber); }
+  .footer-r { text-align: right; }
+  .footer-r a { color: var(--amber-2); text-decoration: none; }
+
+  /* ─────────────── ANIMATIONS ─────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal.delay-1 { transition-delay: 0.1s; }
+  .reveal.delay-2 { transition-delay: 0.2s; }
+  .reveal.delay-3 { transition-delay: 0.3s; }
+
+  /* ─────────────── RESPONSIVE ─────────────── */
+  @media (max-width: 900px) {
+    .nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 120px 24px 60px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-strip { height: 50vh; min-height: 360px; }
+    .dark-section, .pillars-section, .packages-section,
+    .process-section, .about-section, .cta-section { padding: 100px 24px; }
+    .pillars-header { padding: 0 0 60px; }
+    .pillar-row { grid-template-columns: 1fr; }
+    .pillar-text { padding: 60px 32px; border-right: none; border-bottom: 0.5px solid var(--line); }
+    .pillar-row.reverse .pillar-text { order: 2; border-left: none; }
+    .pillar-row.reverse .pillar-image { order: 1; }
+    .math-grid, .packages-grid, .process-grid, .about-stats { grid-template-columns: 1fr; gap: 40px; }
+    .about-grid, .cta-grid { grid-template-columns: 1fr; gap: 60px; }
+    .footer { flex-direction: column; gap: 32px; align-items: start; }
+    .footer-r { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="wordmark">Tigre<span class="dot">.</span></div>
+  <div class="nav-links">
+    <a href="#math">The math</a>
+    <a href="#what">Services</a>
+    <a href="#packages">Packages</a>
+    <a href="#about">About</a>
+  </div>
+  <a href="#contact" class="nav-cta">Get in touch</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <p class="hero-eyebrow reveal">Direct booking studio · Baja California Sur</p>
+    <div class="hero-grid">
+      <h1 class="reveal delay-1">
+        Keep<br/>
+        <span class="italic-amber">every</span> repeat<br/>
+        guest you've<br/>
+        earned<span class="dot-amber">.</span>
+      </h1>
+      <div class="hero-right reveal delay-2">
+        <p>We design direct booking websites for vacation rentals and boutique hotels in Baja — built to convert past Airbnb guests into commission-free regulars.</p>
+        <a href="#packages" class="btn-primary">
+          See packages <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="hero-meta reveal delay-3">
+      <span>Built in Todos Santos</span>
+      <span>Serving Baja California Sur</span>
+      <span>Est. 2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- HERO IMAGE STRIP -->
+<div class="hero-strip">
+  <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=2000&auto=format&fit=crop" alt="Modern Baja vacation rental at golden hour" loading="lazy">
+  <div class="hero-strip-overlay"></div>
+  <p class="hero-strip-caption">Casa Bonita · 4 bedrooms · Cerritos Beach</p>
+</div>
+
+<!-- THE MATH (DARK) -->
+<section class="dark-section" id="math">
+  <p class="section-eyebrow reveal">The math</p>
+  <h2 class="reveal delay-1">
+    Airbnb's 15.5% fee<br/>
+    is your <span class="amber">biggest invisible</span><br/>
+    expense<span style="color:var(--amber-2);">.</span>
+  </h2>
+  <p class="lead reveal delay-2">Every booking quietly hands back a sixth of your revenue to a platform you don't own. Across a year, it adds up to a hidden mortgage.</p>
+
+  <div class="math-grid">
+    <div class="math-stat reveal">
+      <span class="label">Annual loss</span>
+      <div class="figure"><span class="small">$</span>9.3<span class="small">k</span></div>
+      <p class="desc">Average annual loss per Todos Santos property to Airbnb fees in 2026.</p>
+    </div>
+    <div class="math-stat reveal delay-1">
+      <span class="label">Market shift</span>
+      <div class="figure">28<span class="small">%</span></div>
+      <p class="desc">Of vacation rentals now run a direct booking channel alongside Airbnb.</p>
+    </div>
+    <div class="math-stat reveal delay-2">
+      <span class="label">Payback time</span>
+      <div class="figure">60<span class="small">d</span></div>
+      <p class="desc">For a direct site to pay for itself, with just 20% repeat conversion.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS / SERVICES -->
+<section class="pillars-section" id="what">
+  <div class="pillars-header reveal">
+    <p class="section-eyebrow">The work</p>
+    <h2>A second channel.<br/><span class="italic">Not a replacement.</span></h2>
+  </div>
+
+  <div class="pillar-row">
+    <div class="pillar-text">
+      <p class="pillar-num">— 01 / Design</p>
+      <h3>Editorial websites<br/><span class="italic">that sell.</span></h3>
+      <p>Premium typography, oversized photography, mobile-first craft. Built for properties that compete on feeling, not price.</p>
+    </div>
+    <div class="pillar-image">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&auto=format&fit=crop" alt="Premium vacation rental interior" loading="lazy">
+    </div>
+  </div>
+
+  <div class="pillar-row reverse">
+    <div class="pillar-text">
+      <p class="pillar-num">— 02 / Capture</p>
+      <h3>Past guests become<br/><span class="italic">regulars.</span></h3>
+      <p>Email automation, welcome flows, and post-stay sequences that turn one-time Airbnb stays into direct repeat bookings.</p>
+    </div>
+    <div class="pillar-image">
+      <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1400&auto=format&fit=crop" alt="Welcome details at boutique hotel" loading="lazy">
+    </div>
+  </div>
+
+  <div class="pillar-row">
+    <div class="pillar-text">
+      <p class="pillar-num">— 03 / System</p>
+      <h3>Booking engine,<br/><span class="italic">ready to go.</span></h3>
+      <p>Lodgify templates pre-configured, Airbnb calendar sync, Stripe payment links. Plug it in and start earning direct.</p>
+    </div>
+    <div class="pillar-image">
+      <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1400&auto=format&fit=crop" alt="Booking interface on laptop" loading="lazy">
+    </div>
+  </div>
+
+  <div class="pillar-row reverse">
+    <div class="pillar-text">
+      <p class="pillar-num">— 04 / Handoff</p>
+      <h3>You stay<br/><span class="italic">in control.</span></h3>
+      <p>Video tutorials, setup kits, and 30 days of chat support. You own every login, every list, every dollar earned.</p>
+    </div>
+    <div class="pillar-image">
+      <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1400&auto=format&fit=crop" alt="Workspace with documentation" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section class="packages-section" id="packages">
+  <div class="packages-header reveal">
+    <p class="section-eyebrow">Packages</p>
+    <h2>Three ways<br/><span class="italic">to start.</span></h2>
+    <p class="lead">All packages include design, build, setup kits, and 30 days of support.</p>
+  </div>
+
+  <div class="packages-grid">
+
+    <article class="pkg reveal">
+      <h3>Starter</h3>
+      <p class="pkg-tag">One property, one premium page.</p>
+      <div class="pkg-price">$499</div>
+      <p class="pkg-price-mxn">USD · ~$8,500 MXN</p>
+      <ul>
+        <li>One-page premium site</li>
+        <li>Airbnb calendar sync</li>
+        <li>WhatsApp + email capture</li>
+        <li>Setup Starter Kit</li>
+        <li>Delivery in 5–7 days</li>
+      </ul>
+      <button class="pkg-btn">Choose Starter</button>
+    </article>
+
+    <article class="pkg featured reveal delay-1">
+      <span class="pkg-badge">Most popular</span>
+      <h3>Professional</h3>
+      <p class="pkg-tag">Full direct booking system for 1–3 properties.</p>
+      <div class="pkg-price">$999</div>
+      <p class="pkg-price-mxn">USD · ~$17,000 MXN</p>
+      <ul>
+        <li>Multi-page premium site</li>
+        <li>Lodgify booking engine</li>
+        <li>Email automation flows</li>
+        <li>Past guest migration guide</li>
+        <li>Stripe payment links</li>
+        <li>30 days of chat support</li>
+        <li>Delivery in 7–10 days</li>
+      </ul>
+      <button class="pkg-btn">Choose Professional</button>
+    </article>
+
+    <article class="pkg reveal delay-2">
+      <h3>Premium</h3>
+      <p class="pkg-tag">Full channel and brand system.</p>
+      <div class="pkg-price">$1,899</div>
+      <p class="pkg-price-mxn">USD · ~$32,300 MXN</p>
+      <ul>
+        <li>Everything in Professional</li>
+        <li>Full brand identity system</li>
+        <li>Up to 5 properties</li>
+        <li>SEO + 2 blog posts</li>
+        <li>Meta Ads Launch Kit</li>
+        <li>1-on-1 strategy session</li>
+        <li>Delivery in 10–14 days</li>
+      </ul>
+      <button class="pkg-btn">Choose Premium</button>
+    </article>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section">
+  <div class="process-header reveal">
+    <p class="section-eyebrow">Process</p>
+    <h2>From call to launch<br/><span class="italic">in under two weeks.</span></h2>
+  </div>
+  <div class="process-grid">
+    <div class="process-step reveal">
+      <div class="step-num">01</div>
+      <h3>Discovery call</h3>
+      <p>A 15-minute call to understand your property, your audience, and your goals. No sales pitch, no pressure.</p>
+      <p class="process-time">Day 1</p>
+    </div>
+    <div class="process-step reveal delay-1">
+      <div class="step-num">02</div>
+      <h3>Design + build</h3>
+      <p>We design, write, and build your site. You review at two checkpoints. We iterate until it feels right.</p>
+      <p class="process-time">Days 2–10</p>
+    </div>
+    <div class="process-step reveal delay-2">
+      <div class="step-num">03</div>
+      <h3>Launch + handoff</h3>
+      <p>Site goes live. Setup kits delivered. Thirty days of chat support. You own everything, end to end.</p>
+      <p class="process-time">Days 10–14</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-grid">
+    <div class="about-image reveal">
+      <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200&auto=format&fit=crop" alt="Coastal landscape of Baja California Sur" loading="lazy">
+      <p class="about-image-caption">Todos Santos, BCS</p>
+    </div>
+    <div class="reveal delay-1">
+      <p class="section-eyebrow">The studio</p>
+      <p class="about-quote">A small studio for hosts who care about how their brand shows up<span class="amber-accent">.</span> And how much of their revenue<br/>they keep<span class="amber-accent">.</span></p>
+      <div class="about-sig">
+        <strong>Miguel Torres</strong>
+        Founder. Brand strategist and creative director.<br/>
+        Based in Todos Santos. Working with hosts across Baja.
+      </div>
+      <div class="about-stats">
+        <div class="about-stat">
+          <div class="num">10+</div>
+          <p class="lbl">Years of brand and digital launch strategy.</p>
+        </div>
+        <div class="about-stat">
+          <div class="num">400%</div>
+          <p class="lbl">Sales growth delivered for a past launch.</p>
+        </div>
+        <div class="about-stat">
+          <div class="num">C2</div>
+          <p class="lbl">English fluency. Bilingual delivery.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / CONTACT -->
+<section class="cta-section" id="contact">
+  <div class="cta-grid">
+    <div class="reveal">
+      <p class="section-eyebrow">Let's talk</p>
+      <h2>Tell us about<br/><span class="italic">your property.</span></h2>
+      <p class="lead">Send a quick note. We respond within 24 hours with next steps — and a small honest conversation about whether this is the right fit.<br/><br/>Or write us directly at <a href="mailto:hola@tigrestudio.mx">hola@tigrestudio.mx</a></p>
+    </div>
+    <form class="form-wrapper reveal delay-1" onsubmit="event.preventDefault(); alert('Demo form — connect to email service.');">
+      <div class="form-field">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-input" placeholder="Your full name" required>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" placeholder="your@email.com" required>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Properties</label>
+        <select class="form-select" required>
+          <option value="">Select number of properties</option>
+          <option>1 property</option>
+          <option>2–3 properties</option>
+          <option>4–10 properties</option>
+          <option>10+ properties</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Your message</label>
+        <textarea class="form-textarea" placeholder="Tell us about your property and what you're hoping to build..."></textarea>
+      </div>
+      <button type="submit" class="form-submit">Send inquiry →</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-l">
+    <div class="wordmark-foot">Tigre<span class="dot">.</span></div>
+    <div>Todos Santos, Baja California Sur</div>
+    <div>Working with hosts across Baja.</div>
+    <div style="margin-top:12px; opacity:0.5;">© 2026 Tigre Studio. All rights reserved.</div>
+  </div>
+  <div class="footer-r">
+    <div style="margin-bottom:8px;"><a href="mailto:hola@tigrestudio.mx">hola@tigrestudio.mx</a></div>
+    <div>Available Mon–Fri</div>
+    <div>Response within 24 hours</div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Hero strip parallax
+  const heroStripObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('in-view');
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.hero-strip').forEach(el => heroStripObs.observe(el));
+</script>
+
+</body>
+</html>

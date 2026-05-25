@@ -920,7 +920,7 @@
   }, { threshold: 0.3 });
   document.querySelectorAll('.hero-strip').forEach(el => heroStripObs.observe(el));
 
-  // ── Contact form — AJAX via FormSubmit.co ────────────────────────────────
+  // ── Contact form — AJAX via FormSubmit.co (activated ✅) ─────────────────
   const contactForm = document.getElementById('contact-form');
   const formBtn     = document.getElementById('form-btn');
   const formSuccess = document.getElementById('form-success');
@@ -934,14 +934,12 @@
     const properties = document.getElementById('f-properties').value;
     const message    = document.getElementById('f-message').value.trim();
 
-    // Basic client-side validation
     if (!name || !email || !properties) {
       formError.textContent = 'Please fill in your name, email and number of properties.';
       formError.classList.add('visible');
       return;
     }
 
-    // Loading state
     formBtn.disabled = true;
     formBtn.textContent = 'Sending…';
     formError.classList.remove('visible');
@@ -958,20 +956,19 @@
           _subject: 'Nueva consulta — Tigre Studio',
           _template: 'box',
           _captcha: 'false',
+          _autoresponse: `Hola ${name}, gracias por contactar a Tigre Studio. Te respondemos en menos de 24 horas. — Miguel`,
         }),
       });
 
       const data = await res.json();
 
-      if (res.ok && data.success === 'true') {
-        // Hide form, show success
+      if (data.success === 'true' || data.success === true) {
         contactForm.style.display = 'none';
         formSuccess.classList.add('visible');
       } else {
-        throw new Error(data.message || 'Unknown error');
+        throw new Error(data.message || 'Error');
       }
     } catch (err) {
-      // Show error, re-enable button
       formError.textContent = 'Something went wrong. Please email us directly at hola@tigrestudio.mx';
       formError.classList.add('visible');
       formBtn.disabled = false;

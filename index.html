@@ -821,18 +821,23 @@
       <h2>Tell us about<br/><span class="italic">your property.</span></h2>
       <p class="lead">Send a quick note. We respond within 24 hours with next steps — and a small honest conversation about whether this is the right fit.<br/><br/>Or write us directly at <a href="mailto:hola@tigrestudio.mx">hola@tigrestudio.mx</a></p>
     </div>
-    <form class="form-wrapper reveal delay-1" onsubmit="event.preventDefault(); alert('Demo form — connect to email service.');">
+    <form class="form-wrapper reveal delay-1" action="https://formsubmit.co/hola@tigrestudio.mx" method="POST">
+      <!-- Formsubmit config -->
+      <input type="hidden" name="_subject" value="Nueva consulta — Tigre Studio">
+      <input type="hidden" name="_next" value="https://tigrestudio.mx?gracias=1">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="box">
       <div class="form-field">
         <label class="form-label">Name</label>
-        <input type="text" class="form-input" placeholder="Your full name" required>
+        <input type="text" name="name" class="form-input" placeholder="Your full name" required>
       </div>
       <div class="form-field">
         <label class="form-label">Email</label>
-        <input type="email" class="form-input" placeholder="your@email.com" required>
+        <input type="email" name="email" class="form-input" placeholder="your@email.com" required>
       </div>
       <div class="form-field">
         <label class="form-label">Properties</label>
-        <select class="form-select" required>
+        <select name="properties" class="form-select" required>
           <option value="">Select number of properties</option>
           <option>1 property</option>
           <option>2–3 properties</option>
@@ -842,7 +847,7 @@
       </div>
       <div class="form-field">
         <label class="form-label">Your message</label>
-        <textarea class="form-textarea" placeholder="Tell us about your property and what you're hoping to build..."></textarea>
+        <textarea name="message" class="form-textarea" placeholder="Tell us about your property and what you're hoping to build..."></textarea>
       </div>
       <button type="submit" class="form-submit">Send inquiry →</button>
     </form>
